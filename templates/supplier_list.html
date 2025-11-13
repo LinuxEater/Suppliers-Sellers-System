@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ page_title }} | {{ block.super }}{% endblock %}
+
+{% block content %}
+<h2 class="page-title">{{ page_title }}</h2>
+
+<div class="content-header-actions">
+    <a href="/admin/project/supplier/add/" target="_blank" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Adicionar Novo Fornecedor
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3>Lista de Fornecedores</h3>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>E-mail de Contato</th>
+                        <th>Telefone de Contato</th>
+                        <th>Documento</th>
+                        <th>Criado Em</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for supplier in suppliers %}
+                    <tr>
+                        <td>{{ supplier.name }}</td>
+                        <td>{{ supplier.contact_email|default:"N/A" }}</td>
+                        <td>{{ supplier.contact_phone|default:"N/A" }}</td>
+                        <td>{{ supplier.document|default:"N/A" }}</td>
+                        <td>{{ supplier.created_at|date:"d/m/Y H:i" }}</td>
+                        <td>
+                            <a href="/admin/project/supplier/{{ supplier.pk }}/change/" target="_blank" class="action-icon edit-icon" title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="/admin/project/supplier/{{ supplier.pk }}/delete/" target="_blank" class="action-icon delete-icon" title="Excluir">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">Nenhum fornecedor encontrado.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .content-header-actions {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: flex-end;
+    }
+    .table-responsive {
+        overflow-x: auto;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+    table th, table td {
+        padding: 12px 15px;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+    }
+    table th {
+        background-color: var(--bg-primary);
+        color: var(--text-secondary);
+        font-weight: 600;
+    }
+    table tbody tr:hover {
+        background-color: var(--hover-color);
+    }
+    .action-icon {
+        margin-right: 10px;
+        color: var(--text-secondary);
+        transition: color 0.2s ease;
+    }
+    .action-icon:hover {
+        color: var(--gold);
+    }
+    .action-icon.delete-icon:hover {
+        color: #f46a6a; /* Red for delete */
+    }
+    .text-center {
+        text-align: center;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,18 @@
+/* Custom CSS for Jazzmin Admin */
+
+.jazzmin-logo-small {
+    max-height: 40px; /* Adjust as needed */
+    max-width: 150px; /* Adjust as needed */
+    width: auto;
+    height: auto;
+    object-fit: contain; /* Ensures the image scales down without cropping */
+}
+
+/* Apply to login page logo */
+.login-page .login-box .card-body .login-logo img {
+    max-height: 80px; /* Adjust for login page */
+    max-width: 200px; /* Adjust for login page */
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}

@@ -1,0 +1,85 @@
+/* Dashboard Custom Styles */
+
+:root {
+    --gold-color: #D4AF37;
+    --dark-bg: #1c1c1e;
+    --light-text: #f5f5f7;
+    --card-bg: #2c2c2e;
+    --border-color: #444;
+}
+
+.card-stat {
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.card-stat:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-stat-icon {
+    font-size: 3em;
+    color: var(--gold-color);
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+.card-stat-content {
+    line-height: 1.2;
+}
+
+.card-stat-title {
+    font-size: 1rem;
+    color: var(--light-text);
+    margin-bottom: 5px;
+    font-weight: 300;
+}
+
+.card-stat-value {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #fff;
+    margin: 0;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+}
+
+.card-header {
+    background-color: transparent;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card-header .card-title {
+    color: var(--gold-color);
+    font-weight: bold;
+}
+
+.table {
+    color: var(--light-text);
+}
+
+.table thead th {
+    border-top: none;
+    color: #aaa;
+    font-weight: 500;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.table tbody tr:hover {
+    background-color: #3a3a3c;
+}
+
+.table td, .table th {
+    border-top: 1px solid var(--border-color);
+}

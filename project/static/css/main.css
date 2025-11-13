@@ -1,0 +1,481 @@
+/* --- Global Styles & Variables --- */
+:root {
+    --gold: #D4AF37;
+    --gold-dark: #b89a30;
+    --bg-primary: #F8F9FA;
+    --bg-secondary: #FFFFFF;
+    --text-primary: #212529;
+    --text-secondary: #6C757D;
+    --border-color: #DEE2E6;
+    --hover-color: #E9ECEF;
+    --sidebar-width: 260px;
+    --header-height: 70px;
+    --font-family: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    /* Removed display: flex; */
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    background-color: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    position: fixed; /* Changed to fixed for offset behavior */
+    left: -var(--sidebar-width); /* Hidden by default */
+    top: 0;
+    transition: left 0.3s ease-in-out; /* Transition 'left' property */
+    z-index: 1000;
+}
+
+.sidebar.open {
+    left: 0; /* Visible when open */
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2); /* Add shadow when open */
+}
+
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.logo {
+    height: 40px;
+    width: 40px;
+    margin-right: 15px;
+}
+
+.logo img{
+    border-radius: 15% !important;
+}
+
+.sidebar-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.sidebar-menu {
+    flex-grow: 1;
+    padding: 20px 0;
+}
+
+.sidebar-menu li a {
+    display: flex;
+    align-items: center;
+    padding: 15px 25px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+}
+
+.sidebar-menu li a:hover {
+    background-color: var(--hover-color);
+    color: var(--text-primary);
+}
+
+.sidebar-menu li a.active {
+    color: var(--gold);
+    background-color: var(--hover-color);
+    border-left-color: var(--gold);
+}
+
+.sidebar-menu li a i {
+    width: 20px;
+    margin-right: 15px;
+    font-size: 1.1rem;
+}
+
+.sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid var(--border-color);
+}
+
+.sidebar-footer a {
+    display: flex;
+    align-items: center;
+    color: var(--text-secondary);
+}
+
+.sidebar-footer i {
+    font-size: 1.5rem;
+    margin-right: 10px;
+}
+
+/* --- Main Content --- */
+.main-content {
+    /* Removed display: flex; flex-direction: column; */
+    min-height: 100vh; /* Ensure it takes full height */
+    position: relative; /* For positioning toggle button */
+    margin-left: 0; /* Removed default margin-left */
+    width: 100%; /* Occupy full width */
+    transition: margin-left 0.3s ease-in-out; /* Keep transition for potential future use */
+}
+
+.main-header {
+    height: var(--header-height);
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+.menu-toggle-btn {
+    /* Removed position: absolute; top: 20px; left: 20px; */
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-right: 20px; /* Add some spacing */
+    z-index: 1001; /* Ensure it's above the sidebar */
+}
+
+.header-search {
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-primary);
+    padding: 8px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    /* Removed margin-left: 60px; as it's now part of flex flow */
+}
+
+/* Responsive adjustments for menu-toggle-btn */
+@media (min-width: 992px) {
+    .menu-toggle-btn {
+        display: none !important; /* Hide toggle button on larger screens */
+    }
+}
+
+@media (max-width: 991.98px) {
+    .menu-toggle-btn {
+        display: block !important; /* Show toggle button on smaller screens */
+    }
+}
+
+.header-search i {
+    color: var(--text-secondary);
+}
+
+.header-search input {
+    background: none;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    margin-left: 10px;
+    font-size: 1rem;
+}
+
+.content-wrapper {
+    padding: 30px;
+    flex-grow: 1;
+}
+
+.main-footer {
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    padding: 20px 30px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* --- Sidebar Overlay --- */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 990; /* Below sidebar, above main content */
+    display: none; /* Hidden by default */
+}
+
+.sidebar-overlay.active {
+    display: block; /* Visible when sidebar is open */
+}
+
+/* --- Home Page Styles --- */
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--bg-secondary);
+    padding: 60px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.hero-text h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 15px;
+}
+
+.hero-text p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+    max-width: 500px;
+}
+
+.btn {
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border: none;
+}
+
+.btn-primary {
+    background-color: var(--gold);
+    color: var(--bg-secondary);
+}
+
+.btn-primary:hover {
+    background-color: var(--gold-dark);
+}
+
+.hero-image img {
+    max-width: 350px;
+}
+
+.feature-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.feature-card {
+    background-color: var(--bg-secondary);
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    color: var(--gold);
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: var(--text-primary);
+}
+
+.feature-card p {
+    color: var(--text-secondary);
+}
+
+/* --- Dashboard Page Styles --- */
+.page-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: var(--text-primary);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.stat-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.stat-card-icon {
+    font-size: 2rem;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    margin-right: 20px;
+    background-color: var(--icon-color);
+    color: #fff; /* Keep white for icons */
+}
+
+.stat-card-title {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 5px;
+}
+
+.stat-card-value {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.card-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.card-header h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--gold);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.chart-container {
+    height: 350px;
+    position: relative;
+}
+
+.recent-products table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.recent-products th, .recent-products td {
+    text-align: left;
+    padding: 15px 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.recent-products th {
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.recent-products tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-badge.active {
+    background-color: rgba(52, 195, 143, 0.2);
+    color: #34c38f;
+}
+
+.status-badge.inactive {
+    background-color: rgba(244, 106, 106, 0.2);
+    color: #f46a6a;
+}
+
+.quick-actions .action-btn {
+    display: block;
+    background-color: var(--bg-primary);
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.quick-actions .action-btn:hover {
+    background-color: var(--hover-color);
+}
+
+.quick-actions .action-btn i {
+    margin-right: 10px;
+    color: var(--gold);
+}
+
+/* --- Responsive --- */
+@media (max-width: 1200px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 992px) {
+    :root {
+        --sidebar-width: 220px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        left: -var(--sidebar-width); /* Ensure it's hidden by default on small screens too */
+    }
+    .sidebar.open {
+        left: 0;
+    }
+    .main-content {
+        margin-left: 0;
+    }
+    .menu-toggle-btn {
+        display: block;
+        margin-right: 20px;
+    }
+    .hero-section {
+        flex-direction: column;
+        text-align: center;
+    }
+    .hero-image {
+        margin-top: 40px;
+    }
+}
