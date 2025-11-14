@@ -10,9 +10,25 @@
 
 /* Apply to login page logo */
 .login-page .login-box .card-body .login-logo img {
-    max-height: 80px; /* Adjust for login page */
-    max-width: 200px; /* Adjust for login page */
+    max-height: 60px; /* Smaller height for login page */
+    max-width: 60px; /* Smaller width for login page */
     width: auto;
     height: auto;
-    object-fit: contain;
+    object-fit: cover; /* Ensures the image covers the area, cropping if necessary */
+    border-radius: 50%; /* Makes the image rounded */
+    overflow: hidden; /* Ensures content outside the border-radius is hidden */
+    display: block; /* Ensures margin auto works for centering */
+    margin: 0 auto; /* Centers the image */
 }
+
+/* Styling for a potential hero image on the main admin panel */
+/* This selector might need adjustment based on the actual HTML structure */
+.main-header img, .content-header img, .app-index img {
+    max-width: 60px !important; /* Make it smaller */
+    max-height: 60px !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: 0 auto !important;
+    border-radius: 8px !important; /* Slightly rounded corners */
+}
+

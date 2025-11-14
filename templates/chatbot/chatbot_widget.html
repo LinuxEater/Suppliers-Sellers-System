@@ -1,0 +1,100 @@
+<style>
+    /* Floating Action Button (FAB) */
+    .chatbot-fab {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #007bff;
+        color: white;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.8em;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        transition: background-color 0.3s;
+    }
+    .chatbot-fab:hover {
+        background-color: #0056b3;
+    }
+
+    /* Chatbot Modal */
+    .chatbot-modal {
+        position: fixed;
+        bottom: 90px; /* Above the FAB */
+        right: 20px;
+        width: 350px;
+        height: 500px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        z-index: 999;
+        display: none; /* Hidden by default */
+        flex-direction: column;
+        overflow: hidden;
+    }
+    .chatbot-modal.show {
+        display: flex;
+    }
+    .chatbot-modal-header {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 15px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: bold;
+    }
+    .chatbot-modal-header .close-button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5em;
+        cursor: pointer;
+    }
+    .chatbot-modal-body {
+        flex-grow: 1;
+        overflow: hidden; /* Ensure iframe fits */
+    }
+    .chatbot-modal-body iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+</style>
+
+<div class="chatbot-fab" id="chatbot-fab">
+    <i class="fas fa-comments"></i>
+</div>
+
+<div class="chatbot-modal" id="chatbot-modal">
+    <div class="chatbot-modal-header">
+        <span>Assistente de IA</span>
+        <button class="close-button" id="close-chatbot-modal">&times;</button>
+    </div>
+    <div class="chatbot-modal-body">
+        <iframe src="{% url 'chatbot' %}" frameborder="0"></iframe>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatbotFab = document.getElementById('chatbot-fab');
+        const chatbotModal = document.getElementById('chatbot-modal');
+        const closeButton = document.getElementById('close-chatbot-modal');
+
+        chatbotFab.addEventListener('click', function() {
+            chatbotModal.classList.toggle('show');
+        });
+
+        closeButton.addEventListener('click', function() {
+            chatbotModal.classList.remove('show');
+        });
+    });
+</script>

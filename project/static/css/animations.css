@@ -1,0 +1,52 @@
+/* animations.css */
+
+/* Fade-in for main content on page load */
+.main-content {
+    animation: fadeIn 0.8s ease-out forwards;
+    opacity: 0; /* Start invisible */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Subtle hover effect for cards */
+.stat-card, .card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover, .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Button hover effects (if not already defined) */
+.btn {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Example for specific button types */
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker blue */
+}
+
+.btn-success:hover {
+    background-color: #1e7e34; /* Darker green */
+}
+
+.btn-danger:hover {
+    background-color: #bd2130; /* Darker red */
+}
+
+/* Add more specific animations as needed */

@@ -1,0 +1,24 @@
+# Python
+*.pyc
+__pycache__/
+.Python
+env/
+venv/
+.env
+
+# Django
+*.log
+*.sqlite3
+db.sqlite3
+media/
+
+# IDEs
+.idea/
+.vscode/
+
+# Operating System
+.DS_Store
+Thumbs.db
+
+# Gemini CLI specific ignores
+.gemini/

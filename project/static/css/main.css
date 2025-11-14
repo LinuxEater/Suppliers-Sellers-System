@@ -172,7 +172,7 @@ ul {
 /* Responsive adjustments for menu-toggle-btn */
 @media (min-width: 992px) {
     .menu-toggle-btn {
-        display: none !important; /* Hide toggle button on larger screens */
+        /* display: none !important; */ /* Keep it visible */
     }
 }
 

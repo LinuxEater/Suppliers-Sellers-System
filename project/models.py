@@ -181,3 +181,104 @@ def ensure_image_position(sender, instance, **kwargs):
                 if i not in occupied:
                     instance.position = i
                     break
+
+
+class Sale(models.Model):
+    PLATFORM_CHOICES = [
+        ('loja_fisica', 'Loja Física'),
+        ('shopee', 'Shopee'),
+        ('outros', 'Outros'),
+    ]
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='sales', verbose_name='Produto')
+    vendor = models.ForeignKey(Vendor, on_delete=models.SET_NULL, null=True, blank=True, related_name='sales', verbose_name='Vendedor')
+    quantity = models.PositiveIntegerField('Quantidade Vendida', default=1, validators=[MinValueValidator(1)])
+    total_price = models.DecimalField('Preço Total da Venda', max_digits=12, decimal_places=2, validators=[MinValueValidator(Decimal('0.01'))])
+    platform = models.CharField('Plataforma de Venda', max_length=20, choices=PLATFORM_CHOICES, default='loja_fisica')
+    sale_date = models.DateTimeField('Data da Venda', default=timezone.now)
+
+    class Meta:
+        verbose_name = 'Venda'
+        verbose_name_plural = 'Vendas'
+        ordering = ['-sale_date']
+
+    def __str__(self):
+        return f'Venda de {self.quantity}x {self.product.name} em {self.sale_date.strftime("%d/%m/%Y")}'
+
+
+class StockHistory(models.Model):
+    REASON_CHOICES = [
+        ('new_stock', 'Novo Estoque'),
+        ('sale', 'Venda'),
+        ('manual_adjustment', 'Ajuste Manual'),
+        ('initial_stock', 'Estoque Inicial'),
+    ]
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='stock_history')
+    change = models.IntegerField('Alteração no Estoque')
+    reason = models.CharField('Motivo', max_length=20, choices=REASON_CHOICES)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Histórico de Estoque'
+        verbose_name_plural = 'Históricos de Estoque'
+        ordering = ['-timestamp']
+
+    def __str__(self):
+        return f'{self.product.name}: {self.change} em {self.timestamp.strftime("%d/%m/%Y")}'
+
+
+from django.db.models.signals import post_save
+from .utils import send_low_stock_notification
+
+@receiver(post_save, sender=Sale)
+def record_sale_in_stock_history(sender, instance, created, **kwargs):
+    if created:
+        StockHistory.objects.create(
+            product=instance.product,
+            change=-instance.quantity,
+            reason='sale'
+        )
+        # Update product stock
+        product = instance.product
+        product.stock -= instance.quantity
+        product.save(update_fields=['stock'])
+
+        # Check for low stock
+        if product.stock < settings.LOW_STOCK_THRESHOLD:
+            send_low_stock_notification(product)
+
+
+@receiver(pre_save, sender=Product)
+def record_manual_stock_adjustment(sender, instance, **kwargs):
+    if instance.pk:
+        try:
+            old_instance = Product.objects.get(pk=instance.pk)
+            if old_instance.stock != instance.stock:
+                change = instance.stock - old_instance.stock
+                reason = 'manual_adjustment' # Corrected line
+                if change != 0:
+                    StockHistory.objects.create(
+                        product=instance,
+                        change=change,
+                        reason=reason
+                    )
+                    # Check for low stock after manual adjustment
+                    if instance.stock < settings.LOW_STOCK_THRESHOLD:
+                        send_low_stock_notification(instance)
+        except Product.DoesNotExist:
+            pass # New product, initial stock will be handled separately if needed
+    else:
+        # This is a new product, we can create an initial stock record
+        if instance.stock > 0:
+            # This will be created after the product is saved, so we need a post_save signal for new products
+            pass
+
+@receiver(post_save, sender=Product)
+def record_initial_stock(sender, instance, created, **kwargs):
+    if created and instance.stock > 0:
+        StockHistory.objects.create(
+            product=instance,
+            change=instance.stock,
+            reason='initial_stock'
+        )

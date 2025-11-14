@@ -42,8 +42,22 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'project',
-    'dashboard'
+    'dashboard',
+    'import_export', # Added for bulk import/export
+    'rest_framework', # Added for REST API
+    'django_filters', # Added for advanced filtering
+    'chatbot', # Added for chatbot functionality
 ]
+
+# Django REST Framework settings
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated', # Require authentication by default
+    ],
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend' # Enable django-filter
+    ]
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -134,6 +148,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = '/admin/login/'
 
 # CKEditor
 CKEDITOR_UPLOAD_PATH = "uploads/"
@@ -226,3 +242,23 @@ JAZZMIN_SETTINGS = {
         }
     }
 }
+
+# Email Configuration
+# For development, emails will be printed to the console.
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# For production, use a real SMTP server.
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.example.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'your-email@example.com'
+# EMAIL_HOST_PASSWORD = 'your-email-password'
+# DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+
+# Admin email for notifications
+ADMIN_EMAIL = 'admin@example.com'
+
+# Low stock threshold
+LOW_STOCK_THRESHOLD = 5
+

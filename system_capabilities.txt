@@ -1,0 +1,68 @@
+Este documento lista as principais funcionalidades e capacidades do sistema Vendedores-Fornecedores:
+
+1.  **Gestão de Produtos:**
+    *   Criação, leitura, atualização e exclusão (CRUD) de produtos.
+    *   Campos detalhados para produtos: código, nome, descrição, preço de custo, preço recomendado, margem de negociação, estoque, status de atividade.
+    *   Associação de produtos a fornecedores.
+    *   Upload de múltiplas imagens por produto.
+    *   Upload de vídeo opcional por produto.
+    *   Cálculo automático de preços de venda (física e Shopee) e preço mínimo permitido com base em configurações de taxas.
+
+2.  **Gestão de Fornecedores:**
+    *   Criação, leitura, atualização e exclusão (CRUD) de fornecedores.
+    *   Campos para fornecedores: nome, e-mail de contato, telefone de contato, documento (CNPJ/CPF).
+
+3.  **Gestão de Vendedores:**
+    *   Criação, leitura, atualização e exclusão (CRUD) de vendedores.
+    *   Associação de vendedores a usuários do sistema.
+    *   Campos para vendedores: nome, telefone, imagem de perfil.
+
+4.  **Gestão de Vendas:**
+    *   Registro de vendas com detalhes: produto, vendedor, quantidade, preço total, plataforma de venda, data da venda.
+    *   Atualização automática do estoque do produto após uma venda.
+
+5.  **Histórico de Estoque:**
+    *   Registro automático de todas as alterações de estoque (vendas, ajustes manuais, estoque inicial).
+    *   Detalhes do histórico: produto, mudança na quantidade, motivo da mudança, timestamp.
+
+6.  **Notificações de Estoque Baixo:**
+    *   Sistema de notificação por e-mail para produtos cujo estoque atinge um limite pré-definido.
+
+7.  **Importação/Exportação em Massa de Produtos:**
+    *   Funcionalidade para importar e exportar dados de produtos em massa diretamente pelo painel administrativo do Django, utilizando `django-import-export`.
+
+8.  **Dashboards Específicos:**
+    *   **Dashboard Principal:** Visão geral com KPIs, gráficos de vendas, produtos por fornecedor, produtos em estoque, produtos mais/menos ativos, e alertas de estoque baixo.
+    *   **Dashboards por Vendedor:** Painéis dedicados para cada vendedor, exibindo suas métricas de vendas e desempenho.
+    *   **Dashboards por Fornecedor:** Painéis dedicados para cada fornecedor, mostrando o desempenho de seus produtos e vendas associadas.
+
+9.  **API RESTful:**
+    *   API completa para acesso programático aos dados de Produtos, Fornecedores, Vendedores e Vendas.
+    *   Endpoints para listar, criar, recuperar, atualizar e excluir recursos.
+    *   Autenticação necessária para acesso à API.
+
+10. **Busca e Filtragem Avançada na API:**
+    *   Capacidades de busca e filtragem detalhadas para todos os endpoints da API, permitindo consultas complexas por diversos critérios (nome, estoque, datas, etc.).
+
+11. **Chatbot de IA:**
+    *   Assistente virtual integrado, alimentado pela API Google Gemini.
+    *   Disponível como um widget flutuante em todas as páginas do sistema.
+    *   Capaz de responder a perguntas sobre o funcionamento do sistema, produtos, fornecedores, vendedores e vendas.
+
+12. **Interface Administrativa (Jazzmin):**
+    *   Painel administrativo aprimorado com o tema Jazzmin, oferecendo uma experiência de usuário moderna e personalizável.
+    *   Gerenciamento completo de todos os modelos do sistema.
+
+13. **Segurança:**
+    *   Autenticação de usuário.
+    *   Proteção CSRF.
+    *   Controle de acesso baseado em permissões (para o admin).
+    *   Configurações de segurança padrão do Django.
+
+14. **Internacionalização:**
+    *   Configurado para português (pt-br) e fuso horário de São Paulo.
+
+15. **Gerenciamento de Mídia:**
+    *   Configuração para upload e servir arquivos de mídia (imagens de perfil, imagens de produtos, vídeos de produtos).
+
+Este conjunto de funcionalidades oferece uma solução robusta para o gerenciamento eficiente de operações de vendas e relacionamento com a cadeia de suprimentos.
