@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.INFO)
 # --- CONSTANTS DE CONFIGURAÇÃO DE API ---
 # ATENÇÃO: Substitua pela sua chave de API REAL.
 # É ALTAMENTE RECOMENDADO USAR VARIÁVEIS DE AMBIENTE PARA CHAVES SENSÍVEIS
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "AIzaSyCbrryJ6UdhDYrRuFuDbeVE-Zfy_mdlVIU")
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "############################")
 GEMINI_MODEL = "gemini-2.5-flash-preview-09-2025"
 GEMINI_API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_API_KEY}"
 
