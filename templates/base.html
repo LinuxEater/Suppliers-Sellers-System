@@ -25,6 +25,7 @@
             <ul class="navbar-nav flex-grow-1">
                 <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'home' %}"><i class="fas fa-home"></i><span>Home</span></a></li>
                 <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'product_list' or request.resolver_match.url_name == 'product_detail' %}active{% endif %}" href="{% url 'product_list' %}"><i class="fas fa-box"></i><span>Produtos</span></a></li>
                 <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'supplier_list' %}active{% endif %}" href="{% url 'supplier_list' %}"><i class="fas fa-truck-loading"></i><span>Fornecedores</span></a></li>
                 <li class="nav-item"><a class="nav-link {% if request.resolver_match.url_name == 'vendor_list' %}active{% endif %}" href="{% url 'vendor_list' %}"><i class="fas fa-users"></i><span>Vendedores</span></a></li>
                 <li class="nav-item"><a class="nav-link" href="/admin/" target="_blank"><i class="fas fa-cog"></i><span>Admin</span></a></li>

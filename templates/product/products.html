@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Lista de Produtos{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/products.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4">
+    <h1 class="mt-4">Produtos</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+        <li class="breadcrumb-item active">Produtos</li>
+    </ol>
+
+    <div class="product-grid">
+        {% for product in products %}
+        <div class="product-card">
+            <a href="{% url 'product_detail' pk=product.pk %}" class="product-card__image-container">
+                {% with product.images.all|first as first_image %}
+                    {% if first_image %}
+                        <img src="{{ first_image.image.url }}" alt="{{ first_image.alt_text|default:product.name }}" class="product-card__image">
+                    {% else %}
+                        <img src="{% static 'img/logo/logo.jpg' %}" alt="Placeholder Image" class="product-card__image">
+                    {% endif %}
+                {% endwith %}
+            </a>
+            <div class="product-card__body">
+                <h3 class="product-card__title" title="{{ product.name }}">{{ product.name }}</h3>
+                <p class="product-card__price">R$ {{ product.recommended_price|floatformat:2 }}</p>
+                <p class="product-card__stock">Estoque: {{ product.stock }}</p>
+                <div class="product-card__footer">
+                    <a href="{% url 'product_detail' pk=product.pk %}" class="product-card__btn">Ver Detalhes</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+            <div class="col">
+                <p>Nenhum produto encontrado.</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
